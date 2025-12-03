@@ -2,31 +2,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-# Hiragana and Katakana character mappings
-HIRAGANA = [
-    'あ', 'い', 'う', 'え', 'お',
-    'か', 'き', 'く', 'け', 'こ',
-    'さ', 'し', 'す', 'せ', 'そ',
-    'た', 'ち', 'つ', 'て', 'と',
-    'な', 'に', 'ぬ', 'ね', 'の',
-    'は', 'ひ', 'ふ', 'へ', 'ほ',
-    'ま', 'み', 'む', 'め', 'も',
-    'や', 'ゆ', 'よ',
-    'ら', 'り', 'る', 'れ', 'ろ',
-    'わ', 'を', 'ん'
+# Hiragana and Katakana romanized mappings
+HIRAGANA_ROMANJI = [
+    'a', 'i', 'u', 'e', 'o',
+    'ka', 'ki', 'ku', 'ke', 'ko',
+    'sa', 'shi', 'su', 'se', 'so',
+    'ta', 'chi', 'tsu', 'te', 'to',
+    'na', 'ni', 'nu', 'ne', 'no',
+    'ha', 'hi', 'fu', 'he', 'ho',
+    'ma', 'mi', 'mu', 'me', 'mo',
+    'ya', 'yu', 'yo',
+    'ra', 'ri', 'ru', 're', 'ro',
+    'wa', 'wo', 'n'
 ]
 
-KATAKANA = [
-    'ア', 'イ', 'ウ', 'エ', 'オ',
-    'カ', 'キ', 'ク', 'ケ', 'コ',
-    'サ', 'シ', 'ス', 'セ', 'ソ',
-    'タ', 'チ', 'ツ', 'テ', 'ト',
-    'ナ', 'ニ', 'ヌ', 'ネ', 'ノ',
-    'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
-    'マ', 'ミ', 'ム', 'メ', 'モ',
-    'ヤ', 'ユ', 'ヨ',
-    'ラ', 'リ', 'ル', 'レ', 'ロ',
-    'ワ', 'ヲ', 'ン'
+KATAKANA_ROMANJI = [
+    'A', 'I', 'U', 'E', 'O',
+    'KA', 'KI', 'KU', 'KE', 'KO',
+    'SA', 'SHI', 'SU', 'SE', 'SO',
+    'TA', 'CHI', 'TSU', 'TE', 'TO',
+    'NA', 'NI', 'NU', 'NE', 'NO',
+    'HA', 'HI', 'FU', 'HE', 'HO',
+    'MA', 'MI', 'MU', 'ME', 'MO',
+    'YA', 'YU', 'YO',
+    'RA', 'RI', 'RU', 'RE', 'RO',
+    'WA', 'WO', 'N'
 ]
 
 
@@ -76,11 +76,8 @@ def visualize_random_samples(dataset_path='data/processed/kana_dataset.npz',
         img = hiragana_images[idx]
         code = hiragana_codes[idx]
         
-        # Map code to hiragana character
-        # ETL8G uses JIS X 0208 codes, need to map to hiragana
-        # For simplicity, use modulo to get character index
-        char_idx = code % len(HIRAGANA)
-        char = HIRAGANA[char_idx] if char_idx < len(HIRAGANA) else '?'
+        char_idx = code % len(HIRAGANA_ROMANJI)
+        char = HIRAGANA_ROMANJI[char_idx] if char_idx < len(HIRAGANA_ROMANJI) else '?'
         
         axes[i].imshow(img, cmap='gray')
         axes[i].set_title(f'Hiragana: {char}\nCode: {code}', 
@@ -92,9 +89,8 @@ def visualize_random_samples(dataset_path='data/processed/kana_dataset.npz',
         img = katakana_images[idx]
         code = katakana_codes[idx]
         
-        # ETL1 uses sequential codes 1-46 for katakana
-        char_idx = (code - 1) % len(KATAKANA)
-        char = KATAKANA[char_idx] if 0 <= char_idx < len(KATAKANA) else '?'
+        char_idx = code % len(KATAKANA_ROMANJI)
+        char = KATAKANA_ROMANJI[char_idx] if 0 <= char_idx < len(KATAKANA_ROMANJI) else '?'
         
         axes[i + num_samples // 2].imshow(img, cmap='gray')
         axes[i + num_samples // 2].set_title(f'Katakana: {char}\nCode: {code}', 
@@ -116,7 +112,7 @@ def visualize_augmentation_comparison(dataset_path='data/processed/kana_dataset.
     
     Args:
         dataset_path: Path to the .npz dataset file
-        char_code: Character code to visualize (1-46 for katakana)
+        char_code: Character code to visualize (0-45)
         num_variations: Number of variations to show
         save_path: Where to save the visualization
     """
@@ -137,8 +133,8 @@ def visualize_augmentation_comparison(dataset_path='data/processed/kana_dataset.
     print(f"Found {len(matching_indices)} samples for code {char_code}")
     
     # Get character name
-    char_idx = (char_code - 1) % len(KATAKANA)
-    char = KATAKANA[char_idx] if 0 <= char_idx < len(KATAKANA) else '?'
+    char_idx = char_code % len(KATAKANA_ROMANJI)
+    char = KATAKANA_ROMANJI[char_idx] if 0 <= char_idx < len(KATAKANA_ROMANJI) else '?'
     
     # Select random variations
     selected_indices = random.sample(list(matching_indices), 
@@ -242,7 +238,7 @@ if __name__ == "__main__":
     dataset_path = 'data/processed/kana_dataset.npz'
     if not os.path.exists(dataset_path):
         print(f"Error: Dataset not found at {dataset_path}")
-        print("Please run 'python data/extract_data.py' first to create the dataset.")
+        print("Please run 'python data/preprocess_data.py' first to create the dataset.")
         exit(1)
     
     print("="*60)
