@@ -33,7 +33,6 @@ data/processed/
 # Training outputs
 *.log
 training_history.json
-confusion_matrix.png
 *.csv
 
 # IDE
