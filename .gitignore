@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+
+# TensorFlow/Keras
+*.h5
+*.hdf5
+*.pb
+saved_models/
+checkpoints/
+logs/
+tensorboard_logs/
+
+# Dataset files (can be large)
+data/raw/
+data/processed/
+*.etl
+*.npz
+*.npy
+
+# TensorFlow.js converted model (generated, but you might want to commit this)
+# Uncomment if you want to version control the converted model:
+# converted_model/
+
+# Training outputs
+*.log
+training_history.json
+confusion_matrix.png
+*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.directory
+
+# Temporary files
+*.tmp
+*.bak
+temp/
+tmp/
+
+# Model checkpoints during training
+*.ckpt
+*.ckpt.*
+checkpoint
+
+# Python egg files
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables
+.env
+.env.local

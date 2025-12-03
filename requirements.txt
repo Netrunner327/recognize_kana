@@ -1,0 +1,14 @@
+# Core ML dependencies (specify versions compatible with Python 3.11)
+tensorflow==2.15.0
+numpy>=1.24.0,<2.0.0  
+h5py>=3.10.0
+
+# TensorFlow.js converter
+tensorflowjs==4.14.0
+
+# Data processing
+pillow>=10.0.0
+scipy>=1.11.0  # For image augmentation (rotate, shift, zoom)
+
+# Utilities
+tqdm>=4.66.0
