@@ -3,6 +3,8 @@ tensorflow==2.15.0
 numpy>=1.24.0,<2.0.0  
 h5py>=3.10.0
 
+scikit-learn
+
 # TensorFlow.js converter
 tensorflowjs==4.14.0
 

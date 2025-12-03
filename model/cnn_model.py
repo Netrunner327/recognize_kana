@@ -51,15 +51,8 @@ def create_kana_cnn(num_classes=92, input_shape=(64, 64, 1)):
     
     return model
 
-# Create model
-model = create_kana_cnn()
 
-# Compile
-model.compile(
-    optimizer=keras.optimizers.Adam(learning_rate=0.001),
-    loss='categorical_crossentropy',
-    metrics=['accuracy']
-)
-
-# Print summary
-model.summary()
+# Only show summary if running this file directly (for testing)
+if __name__ == "__main__":
+    model = create_kana_cnn()
+    model.summary()
